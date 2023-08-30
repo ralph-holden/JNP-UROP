@@ -126,13 +126,10 @@ region hemi_philic_R intersect 2 sphereB_coat block_FR_philic side in
 region hemi_phobic union 2 hemi_phobic_L hemi_phobic_R
 region hemi_philic union 2 hemi_philic_L hemi_philic_R
 
-region sphereA_T sphere -$(v_interdist/2) 0 0 $(v_npradius*3/5) side in
-region sphereB_T sphere $(v_interdist/2) 0 0 $(v_npradius*3/5) side in
-region hot_region union 2 sphereA_T sphereB_T
-
-# for thermostatting
-variable lc equal 2
-region cold_region block -$(lx/2-v_lc) $(lx/2-v_lc) -$(ly/2-v_lc) $(ly/2-v_lc) -$(lz/2-v_lc) $(lz/2-v_lc) units box side out
+# hot region does not need to be defined. # cold region defined later (after fix nve)
+#region sphereA_T sphere -$(v_interdist/2) 0 0 $(v_npradius*3/5) side in
+#region sphereB_T sphere $(v_interdist/2) 0 0 $(v_npradius*3/5) side in
+#region hot_region union 2 sphereA_T sphereB_T
 
 
 # GROUPS - by atom type
@@ -262,6 +259,8 @@ unfix mynpt
 # SET THERMOSTATTING
 fix thermostatH au0 langevin $(v_thot) $(v_tcold) $(500*dt) ${hseed} angmom no
 
+variable lc equal 2
+region cold_region block -$(lx/2-v_lc) $(lx/2-v_lc) -$(ly/2-v_lc) $(ly/2-v_lc) -$(lz/2-v_lc) $(lz/2-v_lc) units box side out
 compute T_cold H2O temp/region cold_region
 fix thermostatC H2O temp/csvr $(v_tcold*2/3) $(v_tcold*2/3) $(500*dt) ${cseed} # could use langevin??
 fix_modify thermostatC temp T_cold
