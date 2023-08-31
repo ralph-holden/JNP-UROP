@@ -1,10 +1,31 @@
-## AUTHOR: RALPH HOLDEN
-## CREATED: 30/08/2023
-
-## NEMD SIMULATION - MODELLING THERMAL FEILD BETWEEN JNPs
-## IN THIS CASE THE LYOPHILIC FACES TOWARD EACH OTHER
-
-## USING CYLINDRICAL TEMPERATURE PROFILE
+print """
+####################################
+        AUTHOR: Ralph Holden
+#
+        CREATED: 30/08/2023
+####################################
+#
+#
+        NOTES:
+#
+                NEMD Simulation - Modelling the themral feild & forces between JNPs
+#
+                Template used for simulations with varying inter-JNP distance & orientation, or an input array
+                (for this interfacial_sep and regions for population in system setup must be changed)
+#
+                For this particular script, the lyophilic faces are toward each other with a separation of 15 Angstrom
+#
+                Using a cylindrical temperature profile
+#
+#
+        LAMMPS SPECIFICATION:
+#
+                Must be used with LAMMPS version 2Aug2023
+#
+                For use with version 31Aug2021, must 'fix shake' H2O molecules after minimisation, using a provisional H2O bond strength before
+                Requires the extra-fix package 'temp/csvr'
+#
+""" append info.txt screen yes
 
 
 
@@ -26,8 +47,8 @@ kspace_style pppm/tip4p 1.0e-4
 timestep 1.0
 
 variable nsteps1 equal 5000
-variable nsteps2 equal 195000
-variable nsteps3 equal 1300000
+variable nsteps2 equal 295000
+variable nsteps3 equal 9700000
 
 variable h2o_seed equal 134853 # seeds
 variable hseed equal 69435
@@ -159,10 +180,6 @@ neigh_modify every 1 delay 0 check yes
 #neigh_modify one 500
 
 
-# CREATE BONDS FOR GOLD ATOMS
-fix mybon au0 bond/create 1000 3 3 2.929 2
-
-
 # GROUPS - by nanoparticle for distance data & spring tether
 # (must be defined after population, but groups by type must be before)
 group gsphereA region sphereA
@@ -213,7 +230,7 @@ fix mynpt all npt temp 300 300 100 x 1 1 1000
 # STANDARD SIMULATION OUTPUTS
 thermo 100
 
-dump mydmp all atom 100 dump.lammpstrj
+dump mydmp all atom 10000 dump.lammpstrj
 
 variable mytemp equal temp
 fix myat1 all ave/time 10 10 100 v_mytemp file temperature.dat
