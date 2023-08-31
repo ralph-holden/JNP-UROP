@@ -212,6 +212,7 @@ fix myshk H2O shake 1.0e-5 200 0 b 1 a 1 mol h2omol
 # RELAX SYSTEM & REDUCE DANGEROUS BUILDS
 minimize 1.0e-6 1.0e-6 1000 10000
 reset_timestep 0
+write_data start.data pair ij
 
 
 # CORRECT BOND STRENGTH & FIX SHAKE WATER
