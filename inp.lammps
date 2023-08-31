@@ -10,6 +10,8 @@ print """
 #
                 NEMD Simulation - Modelling the themral feild & forces between JNPs
 #
+                Must have molecule file tip4p-2005.mol in the same folder (or another & edited molecule command)
+#
                 Template used for simulations with varying inter-JNP distance & orientation, or an input array
                 (for this interfacial_sep and regions for population in system setup must be changed)
 #
