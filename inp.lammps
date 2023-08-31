@@ -15,7 +15,7 @@ print """
                 Template used for simulations with varying inter-JNP distance & orientation, or an input array
                 (for this interfacial_sep and regions for population in system setup must be changed)
 #
-                For this particular script, the lyophilic faces are toward each other with a separation of 15 Angstrom
+                For this particular script, the lyophilic faces are directed toward each other with a separation of 15 Angstrom
 #
                 Using a cylindrical temperature profile
 #
@@ -24,8 +24,9 @@ print """
 #
                 Must be used with LAMMPS version 2Aug2023
 #
-                For use with version 31Aug2021, must 'fix shake' H2O molecules after minimisation, using a provisional H2O bond strength before
                 Requires the extra-fix package 'temp/csvr'
+#
+                For use with version 31Aug2021, must 'fix shake' H2O molecules after minimisation (using a provisional O-H bond strength before)
 #
 """ append info.txt screen yes
 
