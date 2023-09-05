@@ -15,7 +15,7 @@ print """
                 Template used for simulations with varying inter-JNP distance & orientation, or an input array
                 (for this interfacial_sep and regions for population in system setup must be changed)
 #
-                For this particular script, the lyophilic faces are directed toward each other with a separation of 15 Angstrom
+                For this particular script, the lyophilic faces are directed leftward with a separation of 15 Angstrom
 #
                 Using a cylindrical temperature profile
 #
