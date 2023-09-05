@@ -22,7 +22,7 @@ print """
 #
         LAMMPS SPECIFICATION:
 #
-                Must be used with LAMMPS version 2Aug2023
+                Must be used with LAMMPS version 2Aug2023 (for use of fix shake of H2O before minimisation)
 #
                 Requires the extra-fix package 'temp/csvr'
 #
@@ -59,7 +59,6 @@ variable cseed equal 93462
 
 variable npradius equal 10
 variable interfacial_sep equal 15
-#variable cold_sphere_radius equal $(v_npradius + 25)
 variable interdist equal $(v_npradius + v_interfacial_sep)
 variable yzbox equal 40
 variable xbox equal $(v_yzbox + v_interdist/2)
@@ -197,6 +196,7 @@ fix mymomB gsphereB momentum 1 angular rescale
 
 # FIX SPRING JNPs
 fix myspr gsphereA spring couple gsphereB 500.0 0 0 0 $(v_interdist)
+# can instead use a fix spring tether on each JNP
 
 
 
@@ -283,7 +283,7 @@ fix thermostatH au0 langevin $(v_thot) $(v_tcold) $(500*dt) ${hseed} angmom no
 variable lc equal 2
 region cold_region block -$(lx/2-v_lc) $(lx/2-v_lc) -$(ly/2-v_lc) $(ly/2-v_lc) -$(lz/2-v_lc) $(lz/2-v_lc) units box side out
 compute T_cold H2O temp/region cold_region
-fix thermostatC H2O temp/csvr $(v_tcold*2/3) $(v_tcold*2/3) $(500*dt) ${cseed} # could use langevin??
+fix thermostatC H2O temp/csvr $(v_tcold*2/3) $(v_tcold*2/3) $(500*dt) ${cseed} # can use langevin also
 fix_modify thermostatC temp T_cold
 
 fix cons_mom all momentum 1 linear 1 1 1
@@ -294,8 +294,8 @@ fix mynve all nve
 
 
 # TEMPERATURE PROFILES OUTPUT
-compute lwater H2O chunk/atom bin/cylinder x center 1.0 0 0 0 ${cylrad} ${nlayers} units box # could also define between two JNPs
-fix profw H2O ave/chunk 1 $(v_nsteps3) $(v_nsteps3) lwater density/number density/mass temp file water.profiles adof 2 #DoG
+compute lwater H2O chunk/atom bin/cylinder x center 1.0 0 0 0 ${cylrad} ${nlayers} units box 
+fix profw H2O ave/chunk 1 $(v_nsteps3) $(v_nsteps3) lwater density/number density/mass temp file water.profiles adof 2
 
 group hydrogen type 2 
 compute lhydrogen hydrogen chunk/atom bin/cylinder x center 1.0 0 0 0 ${cylrad} ${nlayers} units box
