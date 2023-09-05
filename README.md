@@ -1,2 +1,2 @@
 # JNP-UROP
-Simulating Janus nanoparticles on LAMMPS to investigate temperature control at the nanoscale.
+Simulating Janus nanoparticles using LAMMPS to investigate temperature control at the nanoscale.
