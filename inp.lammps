@@ -60,7 +60,7 @@ variable cseed equal 93462
 
 variable npradius equal 10
 variable interfacial_sep equal 15
-variable interdist equal $(v_npradius + v_interfacial_sep)
+variable interdist equal $(2*v_npradius + v_interfacial_sep)
 variable yzbox equal 40
 variable xbox equal $(v_yzbox + v_interdist/2)
 variable cylrad equal $(v_npradius + 5)
