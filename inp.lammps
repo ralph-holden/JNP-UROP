@@ -271,8 +271,6 @@ fix myat6 all ave/time 10 10 100 c_mytcore c_mytphobic c_mytphilic file temp_coa
 # RUN DEFORMATION-EQUILLIBRATION
 run ${nsteps1}
 
-write_data start.data pair ij
-
 unfix mydfm
 unfix mynpt
 
