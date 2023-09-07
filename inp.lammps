@@ -234,8 +234,6 @@ fix mynpt all npt temp 300 300 100 x 1 1 1000
 
 
 # STANDARD SIMULATION OUTPUTS
-thermo 100
-
 dump mydmp all atom 10000 dump.lammpstrj
 
 variable mytemp equal temp
@@ -259,9 +257,16 @@ fix mysfB gsphereB setforce NULL NULL NULL
 fix myat5 all ave/time 10 10 100 f_mysfA[1] f_mysfB[1] file forces.dat
 
 # DATA OUTPUT - COAT TEMPERATURE
+group au0 type 3 # redefine groups to 'populate'
+group au1 type 4
+group au2 type 5 
+compute mytcore au0 temp
 compute mytphobic au1 temp
 compute mytphilic au2 temp
-fix myat6 all ave/time 10 10 100 c_mytphobic c_mytphilic file temp_coat.dat
+fix myat6 all ave/time 10 10 100 mytcore c_mytphobic c_mytphilic file temp_coat.dat
+
+thermo 100
+thermo_style custom step time temp epair etotal press vol c_mytcore c_mytphobic c_mytphilic
 
 
 # RUN DEFORMATION-EQUILLIBRATION
