@@ -272,6 +272,8 @@ thermo_style custom step time temp epair etotal press vol c_mytcore c_mytphobic 
 # RUN DEFORMATION-EQUILLIBRATION
 run ${nsteps1}
 
+write_data start.data pair ij
+
 unfix mydfm
 unfix mynpt
 
