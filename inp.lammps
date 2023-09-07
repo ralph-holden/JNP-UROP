@@ -29,7 +29,7 @@ print """
 #
                 For use with version 31Aug2021, must 'fix shake' H2O molecules after minimisation (using a provisional O-H bond strength before)
 #
-""" append info.txt screen yes
+""" screen no #append info.txt
 
 
 
