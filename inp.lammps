@@ -197,7 +197,8 @@ fix mymomB gsphereB momentum 1 angular rescale
 
 # FIX SPRING JNPs
 fix myspr gsphereA spring couple gsphereB 500.0 0 0 0 $(v_interdist)
-# can instead use a fix spring tether on each JNP
+fix myspryzA gsphereA 500.0 NULL 0 0 0.0
+fix myspryzB gsphereB 500.0 NULL 0 0 0.0 # hold in place on 'non inter-JNP' axis
 
 
 
@@ -219,7 +220,7 @@ reset_timestep 0
 write_data start.data pair ij
 
 
-# CORRECT BOND STRENGTH & FIX SHAKE WATER
+# CORRECT BOND STRENGTH & FIX SHAKE WATER # -- not nescesary with LAMMPS version 2Aug2023
 #bond_coeff 1 0 0.9572 # H2O O-H -- correct O-H bond strength
 #fix myshk H2O shake 1.0e-5 200 0 b 1 a 1 mol h2omol
 
@@ -252,9 +253,15 @@ variable xB equal xcm(gsphereB,x)
 variable delta_x equal abs(v_xA-v_xB)
 fix myat4 all ave/time 10 10 100 v_delta_x file separation.dat
 
+# DATA OUTPUT - FORCES
 fix mysfA gsphereA setforce NULL NULL NULL
 fix mysfB gsphereB setforce NULL NULL NULL
 fix myat5 all ave/time 10 10 100 f_mysfA[1] f_mysfB[1] file forces.dat
+
+# DATA OUTPUT - COAT TEMPERATURE
+compute mytphobic au1 temp
+compute mytphilic au2 temp
+fix myat6 all ave/time 10 10 100 c_mytphobic c_mytphilic filename temp_coat.dat
 
 
 # RUN DEFORMATION-EQUILLIBRATION
@@ -278,11 +285,14 @@ unfix mynpt
 ##	N E M D
 
 
+# DEFINE COLD REGION (must be done after NPT equilibration)
+variable lc equal 2
+region cold_region block -$(lx/2-v_lc) $(lx/2-v_lc) -$(ly/2-v_lc) $(ly/2-v_lc) -$(lz/2-v_lc) $(lz/2-v_lc) units box side out
+
+
 # SET THERMOSTATTING
 fix thermostatH au0 langevin $(v_thot) $(v_tcold) $(500*dt) ${hseed} angmom no
 
-variable lc equal 2
-region cold_region block -$(lx/2-v_lc) $(lx/2-v_lc) -$(ly/2-v_lc) $(ly/2-v_lc) -$(lz/2-v_lc) $(lz/2-v_lc) units box side out
 compute T_cold H2O temp/region cold_region
 fix thermostatC H2O temp/csvr $(v_tcold*2/3) $(v_tcold*2/3) $(500*dt) ${cseed} # can use langevin also
 fix_modify thermostatC temp T_cold
