@@ -261,7 +261,7 @@ fix myat5 all ave/time 10 10 100 f_mysfA[1] f_mysfB[1] file forces.dat
 # DATA OUTPUT - COAT TEMPERATURE
 compute mytphobic au1 temp
 compute mytphilic au2 temp
-fix myat6 all ave/time 10 10 100 c_mytphobic c_mytphilic filename temp_coat.dat
+fix myat6 all ave/time 10 10 100 c_mytphobic c_mytphilic file temp_coat.dat
 
 
 # RUN DEFORMATION-EQUILLIBRATION
