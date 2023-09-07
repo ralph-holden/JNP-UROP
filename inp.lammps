@@ -256,7 +256,7 @@ fix myat4 all ave/time 10 10 100 v_delta_x file separation.dat
 # DATA OUTPUT - FORCES
 fix mysfA gsphereA setforce NULL NULL NULL
 fix mysfB gsphereB setforce NULL NULL NULL
-fix myat5 all ave/time 10 10 100 f_mysfA[1] f_mysfB[1] file forces.dat
+fix myat5 all ave/time 10 10 100 f_mysfA[*] f_mysfB[*] file forces.dat
 
 # DATA OUTPUT - COAT TEMPERATURE
 group au0 type 3 # redefine groups to 'populate'
