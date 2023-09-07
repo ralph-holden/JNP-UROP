@@ -197,8 +197,8 @@ fix mymomB gsphereB momentum 1 angular rescale
 
 # FIX SPRING JNPs
 fix myspr gsphereA spring couple gsphereB 500.0 0 0 0 $(v_interdist)
-fix myspryzA gsphereA 500.0 NULL 0 0 0.0
-fix myspryzB gsphereB 500.0 NULL 0 0 0.0 # hold in place on 'non inter-JNP' axis
+fix myspryzA gsphereA spring tether 500.0 NULL 0 0 0.0
+fix myspryzB gsphereB spring tether 500.0 NULL 0 0 0.0 # hold in place on 'non inter-JNP' axis
 
 
 
