@@ -263,7 +263,7 @@ group au2 type 5
 compute mytcore au0 temp
 compute mytphobic au1 temp
 compute mytphilic au2 temp
-fix myat6 all ave/time 10 10 100 mytcore c_mytphobic c_mytphilic file temp_coat.dat
+fix myat6 all ave/time 10 10 100 c_mytcore c_mytphobic c_mytphilic file temp_coat.dat
 
 thermo 100
 thermo_style custom step time temp epair etotal press vol c_mytcore c_mytphobic c_mytphilic
