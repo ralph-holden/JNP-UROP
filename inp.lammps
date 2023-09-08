@@ -251,7 +251,7 @@ fix myat3 all ave/time 10 10 100 v_mypress file pressure.dat
 variable xA equal xcm(gsphereA,x)
 variable xB equal xcm(gsphereB,x)
 variable delta_x equal abs(v_xA-v_xB)
-fix myat4 all ave/time 10 10 100 v_delta_x file separation.dat
+fix myat4 all ave/time 10 10 100 v_delta_x v_xA v_xB file separation.dat
 
 # DATA OUTPUT - FORCES
 fix mysfA gsphereA setforce NULL NULL NULL
