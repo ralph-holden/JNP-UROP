@@ -289,7 +289,9 @@ unfix mynpt
 
 ##	N E M D
 
+
 thermo_style custom step time temp epair etotal press vol c_mytcore c_mytphobic c_mytphilic
+
 
 # DEFINE COLD REGION (must be done after NPT equilibration)
 variable lc equal 2
